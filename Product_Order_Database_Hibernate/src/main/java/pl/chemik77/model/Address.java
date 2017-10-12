@@ -85,4 +85,66 @@ public class Address {
 		return "Address [id=" + id + ", steet=" + steet + ", houseNo=" + houseNo + ", city=" + city + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result + ((houseNo == null) ? 0 : houseNo.hashCode());
+		result = prime * result + ((steet == null) ? 0 : steet.hashCode());
+		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Address)) {
+			return false;
+		}
+		Address other = (Address) obj;
+		if (city == null) {
+			if (other.city != null) {
+				return false;
+			}
+		} else if (!city.equals(other.city)) {
+			return false;
+		}
+		if (country == null) {
+			if (other.country != null) {
+				return false;
+			}
+		} else if (!country.equals(other.country)) {
+			return false;
+		}
+		if (houseNo == null) {
+			if (other.houseNo != null) {
+				return false;
+			}
+		} else if (!houseNo.equals(other.houseNo)) {
+			return false;
+		}
+		if (steet == null) {
+			if (other.steet != null) {
+				return false;
+			}
+		} else if (!steet.equals(other.steet)) {
+			return false;
+		}
+		if (zipCode == null) {
+			if (other.zipCode != null) {
+				return false;
+			}
+		} else if (!zipCode.equals(other.zipCode)) {
+			return false;
+		}
+		return true;
+	}
+
 }

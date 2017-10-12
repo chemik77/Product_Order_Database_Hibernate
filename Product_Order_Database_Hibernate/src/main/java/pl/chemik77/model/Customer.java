@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,21 +24,20 @@ public class Customer {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@OneToOne(mappedBy = "customer")
-	private User user;
+	@OneToOne
+	private UserAcc userAcc;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Phone> phones;
-	@OneToMany(cascade = CascadeType.ALL)
+	@ElementCollection
+	private List<String> phones;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Address> addresses;
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-	private List<Ordery> orders;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CustomerOrder> customerOrders;
 
 	public Customer() {
 	}
 
-	public Customer(int id, String firstName, String lastName) {
-		this.id = id;
+	public Customer(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
@@ -66,19 +66,19 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public User getUser() {
-		return user;
+	public UserAcc getUser() {
+		return userAcc;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(UserAcc user) {
+		this.userAcc = user;
 	}
 
-	public List<Phone> getPhones() {
+	public List<String> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(List<Phone> phones) {
+	public void setPhones(List<String> phones) {
 		this.phones = phones;
 	}
 
@@ -92,15 +92,61 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", user=" + user + "]";
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 
-	public List<Ordery> getOrders() {
-		return orders;
+	public List<CustomerOrder> getCustomerOrders() {
+		return customerOrders;
 	}
 
-	public void setOrders(List<Ordery> orders) {
-		this.orders = orders;
+	public void setCustomerOrders(List<CustomerOrder> customerOrders) {
+		this.customerOrders = customerOrders;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((userAcc == null) ? 0 : userAcc.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Customer)) {
+			return false;
+		}
+		Customer other = (Customer) obj;
+		if (firstName == null) {
+			if (other.firstName != null) {
+				return false;
+			}
+		} else if (!firstName.equals(other.firstName)) {
+			return false;
+		}
+		if (lastName == null) {
+			if (other.lastName != null) {
+				return false;
+			}
+		} else if (!lastName.equals(other.lastName)) {
+			return false;
+		}
+		if (userAcc == null) {
+			if (other.userAcc != null) {
+				return false;
+			}
+		} else if (!userAcc.equals(other.userAcc)) {
+			return false;
+		}
+		return true;
 	}
 
 }

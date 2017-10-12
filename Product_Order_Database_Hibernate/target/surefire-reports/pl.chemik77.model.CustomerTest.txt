@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: pl.chemik77.model.CustomerTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.033 s - in pl.chemik77.model.CustomerTest
